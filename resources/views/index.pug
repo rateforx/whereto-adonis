@@ -1,0 +1,36 @@
+extends ../_bootstrap
+
+append head
+    title Home | WhereTo
+
+append body
+    include nav
+
+    .container
+
+        +carousel("caro",[
+            {
+                image: "/pics/caro1.png",
+                p: "Fast and effective delivery service since 1911.",
+                button: {
+                    caption: "Sign up now",
+                    url: "/users/register"
+                }
+            },
+            {
+                image: "/pics/caro2.jpg",
+                p: "For professionals by professionals.",
+                button: {
+                    caption: "Sign up now",
+                    url: "/users/register"
+                }
+            },
+            {
+                image: "/pics/caro3.jpg",
+                p: "Best service, saticfaction guaranteed.",
+                button: {
+                    caption: "Sign up now",
+                    url: "/users/register"
+                }
+            }
+        ])

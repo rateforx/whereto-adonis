@@ -1,0 +1,35 @@
+mixin order(order_id, username, origin, dest, added, weight, cargo)
+
+    .panel.panel-primary
+        //-HEADER
+        .panel-heading(role="tab", id="heading" + order_id)
+            h4.panel-title
+                a(role="button", data-toggle="collapse", data-parent="#accordion", href="#collapse" + order_id, aria-expanded="true", aria-controls="collapseOne")
+                    p
+                        +icon('home')
+                        span #{origin}
+                    p
+                        +icon('flag')
+                        span #{dest}
+
+        //-BODY
+        .panel-collapse.collapse(id="collapse" + order_id, role="tabpanel", aria-labelledby="heading" + order_id)
+            .panel-body.flex-container
+                //-LEFT SIDE
+                .flex-item
+                    p
+                        +icon('calendar')
+                        span #{added}
+                    p
+                        +icon('leaf')
+                        span #{weight}
+                    p
+                        +icon('gift')
+                        span #{cargo}
+                    p
+                        +icon('user')
+                        span #{username}
+
+                .flex-item
+                    +a-btn-primary('/orders/' + order_id)
+                        +icon('check')

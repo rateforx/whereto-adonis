@@ -1,0 +1,21 @@
+extends ../../_bootstrap
+
+append head
+    title Sign in | WhereTo
+
+    include ../nav
+
+append body
+    .container
+        h1.center-block Sign in
+        form(method='post')
+            +input('text', 'login', 'Login', {
+                name: 'login',
+                required: true,
+                autofocus: true
+            })
+            +input('password', 'password', 'Password', {
+                name: 'password',
+                required: true
+            })
+            +input('submit')

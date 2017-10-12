@@ -1,0 +1,35 @@
+extends ../../_bootstrap
+
+append head
+    title Add driver | Whereto
+
+append body
+    include ../nav
+
+    .container
+        +panel-primary("Add driver form")
+            form(method='post')
+
+                +input('text', 'name', 'Name', {
+                    name: 'name',
+                    required: true,
+                    maxlength: 64,
+                    autocomplete: 'off',
+                    autofocus: true
+                })
+                +input('text', 'login', 'Login', {
+                    name: 'login',
+                    required: true,
+                    maxlenght: 32,
+                    autocomplete: 'off'
+                })
+                +input('password', 'password', 'Password', {
+                    name: 'password',
+                    required: true,
+                    maxlength: 64
+                })
+                +input('number', 'maxWeight', 'Max weight', {
+                    name: 'maxWeight',
+                    required: true
+                })
+                +input('submit')

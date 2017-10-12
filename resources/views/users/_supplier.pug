@@ -1,0 +1,81 @@
+extends ../../_bootstrap
+
+append head
+    title My orders | WhereTo
+
+append body
+    include ../nav
+
+    block body
+        .container
+            +panel-info('Drivers')
+                +panel-success()
+                    +a-btn-success('/users/add_driver') Add new driver
+
+                each d in drivers
+                    +panel-primary(d.name)
+                        if d.order_id != ''
+                            p
+                                +icon('bed')
+                                |   Driver is currently idle.
+                        else
+                            p
+                                +icon('fire')
+                                |   Current Job: #{d.order_id}
+
+                        p
+                            +icon('leaf')
+                            |   Max load: #{d.maxWeight}
+
+            +panel-primary('My orders')
+                .panel-group#accordion(role="tablist", aria-multiselectable="true")
+                    each o in orders
+                        .panel.panel-primary
+                            //-HEADER
+                            .panel-heading(role="tab", id="heading" + o.order_id)
+                                h4.panel-title
+                                    a(role="button", data-toggle="collapse", data-parent="#accordion", href="#collapse" + o.order_id, aria-expanded="true", aria-controls="collapseOne")
+                                        p
+                                            +icon('home')
+                                            span #{o.origin}
+                                        p
+                                            +icon('flag')
+                                            span #{o.dest}
+
+                            //-BODY
+                            .panel-collapse.collapse(id="collapse" + o.order_id, role="tabpanel", aria-labelledby="heading" + o.order_id)
+                                .panel-body.flex-container
+                                    //-LEFT SIDE
+                                    .flex-item
+                                        p
+                                            +icon('calendar')
+                                            span #{o.added}
+                                        p
+                                            +icon('leaf')
+                                            span #{o.weight}
+                                        p
+                                            +icon('gift')
+                                            span #{o.cargo}
+                                        p
+                                            +icon('user')
+                                            span #{o.username}
+
+                                    .flex-item
+                                        //todo driver picker
+                                        form(method='post', action='/orders/' + o.order_id + '/pick_driver')
+                                            label(for='type') Pick the driver for the job:
+                                            fieldset.form-group
+                                                .btn-group#type(data-toggle="buttons")
+
+                                                    each d in drivers
+                                                        if d.maxWeight >= o.weight && d.order_id != ''
+                                                            label.btn.btn-default
+                                                                input(type='radio', name='driver_id', autocomplete='off', required, value=d.user_id)
+                                                                p #{d.name}
+                                                                p Max: #{d.maxWeight}
+
+                                            button.btn.btn-primary(data-toggle='modal', data-target='#confirmModal') Off you go, soldier
+                                            +modal('Please confirm', 'confirmModal')
+                                                +input('submit', '', '', {
+                                                    value: 'Godspeed, road driver!'
+                                                })

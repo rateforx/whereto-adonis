@@ -1,0 +1,53 @@
+extends ../../_bootstrap
+
+append head
+    title My current job | WhereTo
+
+append body
+    include ../nav
+
+    block body
+        .container
+            +panel-primary('Where to next?')
+                .panel-group#accordion(role="tablist", aria-multiselectable="true")
+                    if order != undefined
+                        .panel.panel-primary
+                            //-HEADER
+                            .panel-heading(role="tab", id="heading" + order.order_id)
+                                h4.panel-title
+                                    a(role="button", data-toggle="collapse", data-parent="#accordion", href="#collapse" + order.order_id, aria-expanded="true", aria-controls="collapseOne")
+                                        p
+                                            +icon('home')
+                                            span #{order.origin}
+                                        p
+                                            +icon('flag')
+                                            span #{order.dest}
+
+                            //-BODY
+                            .panel-collapse.collapse(id="collapse" + order.order_id, role="tabpanel", aria-labelledby="heading" + order.order_id)
+                                .panel-body.flex-container
+                                    //-LEFT SIDE
+                                    .flex-item
+                                        p
+                                            +icon('calendar')
+                                            span #{order.added}
+                                        p
+                                            +icon('leaf')
+                                            span #{order.weight}
+                                        p
+                                            +icon('gift')
+                                            span #{order.cargo}
+                                        p
+                                            +icon('user')
+                                            span #{order.username}
+
+                                    .flex-item
+                                        form(action='/orders/' + order.order_id + '/close', method='post')
+                                            button.btn.btn-default(data-toggle='modal', data-target='#confirmModal') Confirm delivery
+                                            +modal('Please confirm', 'confirmModal')
+                                                p We're all done here
+                                                +input('submit', '', '', {
+                                                    value: 'Over and out'
+                                                })
+                    else
+                        p You have nothing do to right now :(

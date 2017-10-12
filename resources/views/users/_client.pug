@@ -1,0 +1,48 @@
+extends ../../_bootstrap
+
+append head
+    title My orders | WhereTo
+
+append body
+    include ../nav
+
+    block body
+        .container
+            +panel-success('Want something on the move?')
+                +a-btn-primary('/orders/place') Place new order
+            +panel-primary('My orders')
+                .panel-group#accordion(role="tablist", aria-multiselectable="true")
+                    each o in orders
+                        .panel.panel-primary
+                            //-HEADER
+                            .panel-heading(role="tab", id="heading" + o.order_id)
+                                h4.panel-title
+                                    a(role="button", data-toggle="collapse", data-parent="#accordion", href="#collapse" + o.order_id, aria-expanded="true", aria-controls="collapseOne")
+                                        p
+                                            +icon('home')
+                                            span #{o.origin}
+                                        p
+                                            +icon('flag')
+                                            span #{o.dest}
+
+                            //-BODY
+                            .panel-collapse.collapse(id="collapse" + o.order_id, role="tabpanel", aria-labelledby="heading" + o.order_id)
+                                .panel-body.flex-container
+                                    //-LEFT SIDE
+                                    .flex-item
+                                        p
+                                            +icon('calendar')
+                                            span #{o.added}
+                                        p
+                                            +icon('leaf')
+                                            span #{o.weight}
+                                        p
+                                            +icon('gift')
+                                            span #{o.cargo}
+                                        p
+                                            +icon('user')
+                                            span #{o.username}
+
+                                    .flex-item
+                                        +a-btn-primary('/orders/' + o.order_id)
+                                            +icon('check')

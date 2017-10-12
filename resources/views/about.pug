@@ -1,0 +1,11 @@
+extends ../_bootstrap
+
+append head
+    title About
+
+append body
+    include nav
+
+    .container
+        +panel-primary('About')
+            h1 This is an about page.

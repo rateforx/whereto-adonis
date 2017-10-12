@@ -1,0 +1,44 @@
+extends ../../_bootstrap
+
+append head
+    title Register | Whereto
+
+append body
+    include ../nav
+
+    .container
+        +panel-primary("Sign up form")
+            form(method='post')
+
+                fieldset.form-group
+                    label(for='type') User type
+                    .btn-group#type(data-toggle="buttons")
+                        label.btn.btn-info.active
+                            input(type='radio', name='type', autocomplete='off', required, value='client', checked)
+                            |Client
+                        label.btn.btn-primary
+                            input(type='radio', name='type', autocomplete='off', required, value='supplier')
+                            |Supplier
+                        //-label.btn.btn-default
+                        //-    input(type='radio', name='type', autocomplete='off', required, value='driver')
+                        //-    |Driver
+
+                +input('text', 'name', 'Name', {
+                    name: 'name',
+                    required: true,
+                    maxlength: 64,
+                    autocomplete: 'off',
+                    autofocus: true
+                })
+                +input('text', 'login', 'Login', {
+                    name: 'login',
+                    required: true,
+                    maxlenght: 32,
+                    autocomplete: 'off'
+                })
+                +input('password', 'password', 'Password', {
+                    name: 'password',
+                    required: true,
+                    maxlength: 64
+                })
+                +input('submit')
